@@ -224,7 +224,7 @@
         </div>
 
         <h1>—</h1>
-        <p class="subtitle">focus on the path</p>
+        <p class="subtitle">pastebin</p>
 
         <form id="pasta-form" action="{{ args.public_path_as_str() }}/upload" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -400,7 +400,7 @@
 
                 <!-- Password (if encryption or readonly enabled) -->
                 {% if args.encryption_client_side || args.encryption_server_side || args.enable_readonly %}
-                <input type="password" id="password_field" placeholder="Encryption Password" autocomplete="off" style="display: none;" />
+                <input type="password" id="password_field" placeholder="Encryption Password" autocomplete="off" />
                 {%- endif %}
 
                 <!-- Uploader Password (if required) -->
@@ -473,10 +473,6 @@
                     option.classList.add('selected');
 
                     container.classList.remove('open');
-
-                    if (hiddenInput.id === 'privacy') {
-                        updatePasswordVisibility();
-                    }
                 });
             });
         });
@@ -486,20 +482,6 @@
                 container.classList.remove('open');
             });
         });
-
-        // Show/hide password field based on privacy value
-        function updatePasswordVisibility() {
-            if (!passwordField) return;
-            const priv = privacyInput ? privacyInput.value : 'public';
-            if (priv === 'public' || priv === 'unlisted') {
-                passwordField.style.display = 'none';
-            } else {
-                passwordField.style.display = 'block';
-            }
-        }
-        if (privacyInput) {
-            updatePasswordVisibility();
-        }
 
         // File Selection logic
         if (hiddenFileButton) {
