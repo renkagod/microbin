@@ -10,6 +10,9 @@
 
 MicroBin is a super tiny, feature-rich, configurable, self-contained and self-hosted paste bin web application. It is very easy to set up and use, and will only require a few megabytes of memory and disk storage. It takes only a couple minutes to set it up, why not give it a try now?
 
+> [!NOTE]
+> **Minimalist Redesign**: This fork features a custom, ultra-minimalist black-and-white design. The templates and stylesheets have been replaced with a sleek, centralized layout that dynamically adapts to light and dark system color schemes, complete with customized select dropdowns, modern typography, and a streamlined navigation bar—all while keeping 100% of MicroBin's native pastebin, URL-shortening, file-upload, and encryption functionalities fully operational.
+
 ## Get your own MicroBin server at [my.microbin.eu](https://my.microbin.eu)!
 
 Test MicroBin at [pub.microbin.eu](https://pub.microbin.eu)!
