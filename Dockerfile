@@ -12,9 +12,8 @@ COPY . .
 RUN CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --release && \
     mkdir -p /app/microbin_data
 
-# https://github.com/GoogleContainerTools/distroless
-# nonroot user (uid:gid 65532:65532) is pre-defined in distroless images
-FROM gcr.io/distroless/cc-debian12
+# Use debian-slim as the base image for runtime to include standard libraries (libbz2, liblzma, etc.)
+FROM debian:bookworm-slim
 
 WORKDIR /app
 
@@ -26,9 +25,6 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifica
 
 # copy built executable
 COPY --from=build /app/target/release/microbin /usr/bin/microbin
-
-# copy liblzma dynamically linked by cargo
-COPY --from=build /lib/x86_64-linux-gnu/liblzma.so.5 /lib/x86_64-linux-gnu/liblzma.so.5
 
 # copy data directory skeleton with nonroot ownership
 COPY --from=build --chown=65532:65532 /app/microbin_data /app/microbin_data
