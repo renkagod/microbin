@@ -200,6 +200,23 @@
             margin-top: 1rem;
             margin-bottom: 1rem;
         }
+        .custom-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--fg);
+            color: var(--bg);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-right: 8px;
+            border-radius: 4px;
+            line-height: 1;
+            vertical-align: middle;
+            user-select: none;
+        }
     </style>
     
     {% if !args.pure_html %} 
@@ -220,8 +237,8 @@
     <div class="nav-links">
         <b>
             {% if !args.hide_logo %}
-            <a href="{{ args.public_path_as_str() }}/">
-                <img width="80" style="margin-bottom: -4px; filter: invert(var(--invert-val));" src="{{ args.public_path_as_str() }}/static/logo.png" alt="Logo">
+            <a href="{{ args.public_path_as_str() }}/" style="text-decoration: none;">
+                <span class="custom-logo">&gt;</span>
             </a>
             {%- endif %} 
             {% if !args.title.as_ref().is_none() %}
