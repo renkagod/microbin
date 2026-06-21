@@ -27,6 +27,9 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifica
 # copy built executable
 COPY --from=build /app/target/release/microbin /usr/bin/microbin
 
+# copy liblzma dynamically linked by cargo
+COPY --from=build /lib/x86_64-linux-gnu/liblzma.so.5 /lib/x86_64-linux-gnu/liblzma.so.5
+
 # copy data directory skeleton with nonroot ownership
 COPY --from=build --chown=65532:65532 /app/microbin_data /app/microbin_data
 
