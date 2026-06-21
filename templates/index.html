@@ -243,19 +243,19 @@
                 <div class="custom-select-container" id="expiry-select-container">
                     <div class="custom-select-trigger" id="expiry-trigger">
                         {% if args.default_expiry == "1min" %}1 Minute
-                        {% elif args.default_expiry == "10min" %}10 Minutes
-                        {% elif args.default_expiry == "1hour" %}1 Hour
-                        {% elif args.default_expiry == "24hour" %}24 Hours
-                        {% elif args.default_expiry == "3days" %}3 Days
-                        {% elif args.default_expiry == "1week" %}1 Week (default)
-                        {% elif args.default_expiry == "1month" %}1 Month
-                        {% elif args.default_expiry == "6months" %}6 Months
-                        {% elif args.default_expiry == "1year" %}1 Year
-                        {% elif args.default_expiry == "2years" %}2 Years
-                        {% elif args.default_expiry == "4years" %}4 Years
-                        {% elif args.default_expiry == "8years" %}8 Years
-                        {% elif args.default_expiry == "16years" %}16 Years
-                        {% elif args.default_expiry == "never" %}Never Expire
+                        {% else if args.default_expiry == "10min" %}10 Minutes
+                        {% else if args.default_expiry == "1hour" %}1 Hour
+                        {% else if args.default_expiry == "24hour" %}24 Hours
+                        {% else if args.default_expiry == "3days" %}3 Days
+                        {% else if args.default_expiry == "1week" %}1 Week (default)
+                        {% else if args.default_expiry == "1month" %}1 Month
+                        {% else if args.default_expiry == "6months" %}6 Months
+                        {% else if args.default_expiry == "1year" %}1 Year
+                        {% else if args.default_expiry == "2years" %}2 Years
+                        {% else if args.default_expiry == "4years" %}4 Years
+                        {% else if args.default_expiry == "8years" %}8 Years
+                        {% else if args.default_expiry == "16years" %}16 Years
+                        {% else if args.default_expiry == "never" %}Never Expire
                         {% else %}{{ args.default_expiry }}
                         {% endif %}
                     </div>
@@ -311,7 +311,7 @@
                 <div class="custom-select-container" id="burn-select-container">
                     <div class="custom-select-trigger" id="burn-trigger">
                         {% if args.default_burn_after == 0 %}No Limit (default)
-                        {% elif args.default_burn_after == 1 %}First Read
+                        {% else if args.default_burn_after == 1 %}First Read
                         {% else %}Burn after {{ args.default_burn_after }} reads
                         {% endif %}
                     </div>
@@ -372,10 +372,10 @@
                     <div class="custom-select-trigger" id="privacy-trigger">
                         Privacy: 
                         {% if default_privacy_value == "public" %}Public (default)
-                        {% elif default_privacy_value == "unlisted" %}Unlisted
-                        {% elif default_privacy_value == "readonly" %}Read-only
-                        {% elif default_privacy_value == "private" %}Private (server-encrypted)
-                        {% elif default_privacy_value == "secret" %}Secret (client-encrypted)
+                        {% else if default_privacy_value == "unlisted" %}Unlisted
+                        {% else if default_privacy_value == "readonly" %}Read-only
+                        {% else if default_privacy_value == "private" %}Private (server-encrypted)
+                        {% else if default_privacy_value == "secret" %}Secret (client-encrypted)
                         {% else %}{{ default_privacy_value }}
                         {% endif %}
                     </div>
