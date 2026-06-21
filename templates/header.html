@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     {% if args.title.as_ref().is_none() %}
     <title>MicroBin</title>
@@ -10,53 +9,232 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="{{ args.public_path_as_str()    }}/static/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="{{ args.public_path_as_str() }}/static/favicon.ico">
 
     <script type="text/javascript" src="{{ args.public_path_as_str() }}/static/aes.js"></script>
-    {% if !args.pure_html %} {% if args.custom_css.as_ref().is_none() ||
-    args.custom_css.as_ref().unwrap() == "" %}
-    <link rel="stylesheet" href="{{ args.public_path_as_str() }}/static/water.css">
-    {%- else %}
-    <link rel="stylesheet" href="{{ args.custom_css.as_ref().unwrap() }}">
-    {%- endif %} {%- endif %}
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --fg: #000000;
+            --invert-val: 0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #000000;
+                --fg: #ffffff;
+                --invert-val: 1;
+            }
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 24px;
+            box-sizing: border-box;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+        body.wide {
+            max-width: 1080px;
+        }
+        
+        /* Navigation Links */
+        .nav-links {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .nav-links a, 
+        .nav-links b {
+            color: var(--fg);
+            text-decoration: none;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            transition: opacity 0.2s ease;
+        }
+        .nav-links b {
+            opacity: 1;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        /* Standard Typography and Elements */
+        a {
+            color: var(--fg);
+            text-decoration: underline;
+            transition: opacity 0.2s ease;
+        }
+        a:hover {
+            opacity: 0.8;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+            letter-spacing: -0.04em;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+        }
+        h3 {
+            font-size: 1.4rem;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        /* Form inputs, textareas, buttons */
+        input[type="text"],
+        input[type="password"],
+        input[type="url"],
+        textarea,
+        select {
+            background-color: var(--bg);
+            color: var(--fg);
+            border: 1px solid var(--fg);
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            outline: none;
+            box-sizing: border-box;
+            transition: opacity 0.2s ease;
+            font-family: inherit;
+        }
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--fg);
+            opacity: 0.4;
+        }
+        
+        button,
+        input[type="submit"],
+        .small-button,
+        .download-button {
+            background-color: var(--fg);
+            color: var(--bg);
+            border: none;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            font-family: inherit;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        button:hover,
+        input[type="submit"]:hover,
+        .small-button:hover,
+        .download-button:hover {
+            opacity: 0.8;
+        }
+        
+        /* Code displays */
+        pre {
+            background-color: var(--bg);
+            border: 1px solid var(--fg);
+            padding: 16px;
+            overflow-x: auto;
+            box-sizing: border-box;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Table layout */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--fg);
+            text-align: left;
+        }
+        th {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        tr:hover td {
+            background-color: rgba(128, 128, 128, 0.05);
+        }
+        
+        /* Custom layouts */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        /* Specific overrides for microbin templates */
+        .code-container {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+    
+    {% if !args.pure_html %} 
+        {% if !args.custom_css.as_ref().is_none() && args.custom_css.as_ref().unwrap() != "" %}
+            <link rel="stylesheet" href="{{ args.custom_css.as_ref().unwrap() }}">
+        {% endif %} 
+    {% endif %}
 
 </head>
+
 {% if args.wide %}
+<body class="wide">
+{% else %}
+<body>
+{% endif %}
 
-<body style="max-width: 1080px; margin: auto; padding-left:0.5rem;
-padding-right:0.5rem; line-height: 1.5; font-size: 1.1em; padding-top: 2rem;">
-    {%- else %}
-
-    <body style=" max-width: 800px; margin: auto; padding-left:0.5rem;
-    padding-right:0.5rem; padding-top: 2rem; line-height: 1.5; font-size: 1.1em; ">
-        {%- endif %}
-        <br>
-        {% if !args.hide_header %}
-
-        <div id="nav" style="margin-bottom: 1rem;">
-            <b style="margin-right: 0.5rem">
-                {% if !args.hide_logo %}
-                <!-- <i><span style="font-size:2.2rem;
-                margin-right:1rem">μ</span></i> -->
-                <a href="{{ args.public_path_as_str() }}"><img width=100 style="margin-bottom: -6px; margin-right:
-                0.5rem;" src="{{ args.public_path_as_str() }}/static/logo.png"></a>
-                {%- endif %} {% if args.title.as_ref().is_none() %} {%- else %} {{
-                args.title.as_ref().unwrap() }} {%- endif %}
-            </b>
-
-            <a href="{{ args.public_path_as_str() }}/" style="margin-right: 0.5rem;
-            margin-left: 0.5rem">New</a>
-
-            {% if !args.no_listing %}
-            <a href="{{ args.public_path_as_str() }}/list" style="margin-right: 0.5rem; margin-left: 0.5rem">List</a>
+    {% if !args.hide_header %}
+    <div class="nav-links">
+        <b>
+            {% if !args.hide_logo %}
+            <a href="{{ args.public_path_as_str() }}/">
+                <img width="80" style="margin-bottom: -4px; filter: invert(var(--invert-val));" src="{{ args.public_path_as_str() }}/static/logo.png" alt="Logo">
+            </a>
+            {%- endif %} 
+            {% if !args.title.as_ref().is_none() %}
+                {{ args.title.as_ref().unwrap() }}
             {%- endif %}
+        </b>
 
-            <a href="{{ args.public_path_as_str() }}/guide" style="margin-right: 0.5rem;
-            margin-left: 0.5rem">Guide</a>
+        <a href="{{ args.public_path_as_str() }}/">New</a>
 
-
-        </div>
-
-        <!-- <hr> -->
-
+        {% if !args.no_listing %}
+        <a href="{{ args.public_path_as_str() }}/list">List</a>
         {%- endif %}
+
+        <a href="{{ args.public_path_as_str() }}/guide">Guide</a>
+    </div>
+    {%- endif %}

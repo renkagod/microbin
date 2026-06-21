@@ -229,7 +229,7 @@
         <form id="pasta-form" action="{{ args.public_path_as_str() }}/upload" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <!-- Content Textarea -->
-                <textarea id="content-input" placeholder="Paste your text or link here" autofocus autocomplete="off"></textarea>
+                <textarea id="content-input" placeholder="Paste your text here, or paste a link to shorten it..." autofocus autocomplete="off"></textarea>
 
                 <!-- File attachments (if enabled) -->
                 {% if !args.no_file_upload %}
