@@ -1,6 +1,8 @@
 
-![Screenshot - Main Page](.github/index.png)
-![Screenshot - View Paste](.github/view.png)
+<p align="center">
+  <img src=".github/index.png" alt="Screenshot - Main Page" width="48%" />
+  <img src=".github/view.png" alt="Screenshot - View Paste" width="48%" />
+</p>
 
 # MicroBin
 
