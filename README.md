@@ -1,5 +1,6 @@
 
-![Screenshot](.github/index.png)
+![Screenshot - Main Page](.github/index.png)
+![Screenshot - View Paste](.github/view.png)
 
 # MicroBin
 
